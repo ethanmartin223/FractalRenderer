@@ -37,12 +37,15 @@ public class ComplexNumber {
         return realValue+(imagValue<0?"":"+")+imagValue+"i";
     }
 
-    public static double _mandelbrotSequence(ComplexNumber c, int nOfIterations, double threshold) {
-        if (nOfIterations==0) return c.getNorm();
-        ComplexNumber next = (c.multiply(c)).add(c);
-        if (c.getNorm()>=threshold) return next.getNorm();
-        return mandelbrotSequence(next, nOfIterations-1, threshold);
-    }
+
+//    public static double mandelbrotSequence(ComplexNumber c, int nOfIterations, double threshold) {
+//        return mandelbrotSequence(new ComplexNumber(c.realValue, c.imagValue), c, nOfIterations, threshold);
+//    }
+//
+//    public static double mandelbrotSequence(ComplexNumber original, ComplexNumber c, int nOfIterations, double threshold) {
+//        if (nOfIterations == 0 || c.getNorm() > threshold) return c.getNorm();
+//        return mandelbrotSequence(original, (c.multiply(c)).add(original), nOfIterations - 1, threshold);
+//    }
 
     public static double mandelbrotSequence(ComplexNumber c, int nOfIterations, double threshold) {
         ComplexNumber z = new ComplexNumber(0,0);

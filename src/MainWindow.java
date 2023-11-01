@@ -6,6 +6,8 @@ public class MainWindow extends JFrame {
     float scale = 1;
 
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.opengl", "true");
+
         new MainWindow();
     }
 
@@ -18,7 +20,7 @@ public class MainWindow extends JFrame {
         setLayout(new GridLayout());
         setResizable(false);
 
-        FractalRenderer triangle= new FractalRenderer(800,800);
+        FractalRenderer triangle= new FractalRenderer(800,800, 1);
         add(triangle);
         setVisible(true);
 
