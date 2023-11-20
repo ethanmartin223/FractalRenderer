@@ -12,7 +12,7 @@ public class FractalRenderer extends JPanel {
     long timeStamp;
     long deltaTime;
     int xDrag, yDrag, xPress, yPress;
-    double xPosition, yPosition;
+    double xPosition, yPosition, lastReleasedPositionY, lastReleasedPositionX;
     int numberOfThreads;
 
     public FractalRenderer(int w, int h, int resolution, int numberOfThreads) {
@@ -26,6 +26,9 @@ public class FractalRenderer extends JPanel {
         deltaTime = System.currentTimeMillis();
         xPosition = 0;
         yPosition = 0;
+        lastReleasedPositionX = 0;
+        lastReleasedPositionY = 0;
+
 
         this.addMouseListener(new MouseListener() {
             @Override
@@ -39,17 +42,19 @@ public class FractalRenderer extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("RELEASED");
+                lastReleasedPositionX = xPosition;
+                lastReleasedPositionY = yPosition;
             }
         });
 
         this.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                xDrag = e.getX();
-                yDrag = e.getY();
-                xPosition = -(xDrag-xPress)/scale;
-                yPosition = -(yDrag-yPress)/scale;
+                xDrag = (int) (xPosition+e.getX());
+                yDrag = (int) (yPosition+e.getY());
+                xPosition = lastReleasedPositionX-(xDrag-xPress)/scale;
+                yPosition = lastReleasedPositionY-(yDrag-yPress)/scale;
+                //e.getComponent().repaint();
             }
 
             @Override
@@ -62,16 +67,15 @@ public class FractalRenderer extends JPanel {
         this.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation() < 0)
-                {
+                if (e.getWheelRotation() < 0) {
                     scale+= (1+scale*.1);
                     renderScale = (int) (255+scale*.005);
-                }
-                else
-                {
+                } else {
                     scale-= (1+scale*.1);
                     renderScale = (int) (255+scale*.005);
                 }
+                //e.getComponent().repaint();
+
             }
         });
     }
