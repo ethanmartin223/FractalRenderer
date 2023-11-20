@@ -47,13 +47,13 @@ public class ComplexNumber {
 //        return mandelbrotSequence(original, (c.multiply(c)).add(original), nOfIterations - 1, threshold);
 //    }
 
-    public static double mandelbrotSequence(ComplexNumber c, int nOfIterations, double threshold) {
+    public static double[] mandelbrotSequence(ComplexNumber c, int nOfIterations, double threshold) {
         ComplexNumber z = new ComplexNumber(0,0);
         int n=0;
         while  (z.getNorm() <= threshold && n< nOfIterations) {
             z = (z.multiply(z).add(c));
             n += 1;
         }
-        return n;
+        return new double[]{n, z.getNorm()};
     }
 }

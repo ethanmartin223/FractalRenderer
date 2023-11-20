@@ -14,17 +14,17 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
-        setSize(800, 800);
+        setSize(600, 600);
         setTitle("Triangles!");
         setLocationRelativeTo(null);
         setLayout(new GridLayout());
         setResizable(false);
 
-        FractalRenderer triangle= new FractalRenderer(800,800, 1);
+        FractalRenderer triangle= new FractalRenderer(600,600, 1, 8);
         add(triangle);
         setVisible(true);
 
-        Timer timer = new Timer(0, e->triangle.repaint());
+        Timer timer = new Timer(33, e->triangle.repaint());
         timer.setRepeats(true);
         timer.start();
     }
