@@ -8,7 +8,8 @@ public class FractalRenderer extends JPanel {
 
     boolean[][] pixels;
     double scale;
-    int pixelScale, renderScale;
+    int pixelScale;
+    long renderScale;
     long timeStamp;
     long deltaTime;
     int xDrag, yDrag, xPress, yPress;
@@ -21,7 +22,7 @@ public class FractalRenderer extends JPanel {
         timeStamp = System.currentTimeMillis();
         pixelScale = resolution;
         scale = 80;
-        pixels = new boolean[h][w];
+        pixels = new boolean[h/resolution][w/resolution];
         renderScale = (int) scale;
         deltaTime = System.currentTimeMillis();
         xPosition = 0;
@@ -54,7 +55,7 @@ public class FractalRenderer extends JPanel {
                 yDrag = (int) (yPosition+e.getY());
                 xPosition = lastReleasedPositionX-(xDrag-xPress)/scale;
                 yPosition = lastReleasedPositionY-(yDrag-yPress)/scale;
-                //e.getComponent().repaint();
+                e.getComponent().repaint();
             }
 
             @Override
@@ -74,7 +75,7 @@ public class FractalRenderer extends JPanel {
                     scale-= (1+scale*.1);
                     renderScale = (int) (255+scale*.005);
                 }
-                //e.getComponent().repaint();
+                e.getComponent().repaint();
 
             }
         });
@@ -83,21 +84,33 @@ public class FractalRenderer extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        if ((timeStamp+1000)<System.currentTimeMillis()) {
-            System.out.println("FPS: "+framesPerSecond+" Scale: "+scale+" RenderingScaling: "+renderScale);
-            timeStamp = System.currentTimeMillis();
-            framesPerSecond = 0;
-        }
-        super.paintComponent(g);
+//        if ((timeStamp+1000)<System.currentTimeMillis()) {
+//            System.out.println("FPS: "+framesPerSecond+" Scale: "+scale+" RenderingScaling: "+renderScale);
+//            timeStamp = System.currentTimeMillis();
+//            framesPerSecond = 0;
+//        }
+        //super.paintComponent(g);
 
         double xOffset = xPosition; //higher goes right
         double yOffset = yPosition; //higher goes down
         boolean showGuides = false; // show guidelines
 
+        int guidelines= pixels.length/4;
+        int k =0;
+        System.out.println("TotalPixels: "+pixels.length*pixels.length);
         for (int y = 0; y < pixels.length; y++) {
             for (int x = 0; x < pixels[0].length; x++) {
-                //boolean condition = ((((int)(Math.abs(y-(pixels.length/2))*scale)
-                //        &(int)(Math.abs(x-(pixels[0].length/2))*scale)))==0);
+                if (ComplexNumber.probableThatPointIsInMandelbrotSequence(x,y)) k++;
+                if (x%guidelines==0) {
+                    g.setColor(new Color(255, 0, 0));
+                    g.fillRect((x * pixelScale), (y * pixelScale), pixelScale, pixelScale);
+                    continue;
+                }
+                else if (y%guidelines==0) {
+                    g.setColor(new Color(0, 255, 0));
+                    g.fillRect((x * pixelScale), (y * pixelScale), pixelScale, pixelScale);
+                    continue;
+                }
 
                 double[] condition = ComplexNumber.mandelbrotSequence(new ComplexNumber((((x+scale*xOffset) - (pixels.length/2d))) / (scale),
                         (((y+scale*yOffset) - (pixels.length / 2d))) / (scale)), renderScale, 2);
@@ -108,8 +121,7 @@ public class FractalRenderer extends JPanel {
                 }
             }
         }
-
-        //if (scale>=1000)scale = 80;
-        framesPerSecond +=1;
+        System.out.println("RenderedPixels: "+k);
+        //framesPerSecond +=1;
     }
 }

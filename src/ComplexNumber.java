@@ -9,7 +9,6 @@ public class ComplexNumber {
 
     @Override
     public boolean equals(Object obj) {
-        System.out.println("UNTESTED DON'T USE");
         if (obj.getClass().equals(ComplexNumber.class)) {
             ComplexNumber n = (ComplexNumber)obj;
             return n.realValue == realValue && n.imagValue == imagValue;
@@ -47,7 +46,7 @@ public class ComplexNumber {
 //        return mandelbrotSequence(original, (c.multiply(c)).add(original), nOfIterations - 1, threshold);
 //    }
 
-    public static double[] mandelbrotSequence(ComplexNumber c, int nOfIterations, double threshold) {
+    public static double[] mandelbrotSequence(ComplexNumber c, long nOfIterations, double threshold) {
         ComplexNumber z = new ComplexNumber(0,0);
         int n=0;
         while  (z.getNorm() <= threshold && n< nOfIterations) {
@@ -55,5 +54,10 @@ public class ComplexNumber {
             n += 1;
         }
         return new double[]{n, z.getNorm()};
+    }
+
+    public static boolean probableThatPointIsInMandelbrotSequence(int x, int y) {
+        System.out.println(mandelbrotSequence(new ComplexNumber(x,y), 4, 2)[1]);
+        return 2<=mandelbrotSequence(new ComplexNumber(x,y), 2, 2)[1];
     }
 }

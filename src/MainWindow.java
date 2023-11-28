@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    boolean[][] pixels;
-    float scale = 1;
-
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
 
@@ -13,19 +10,26 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
-        setSize(600, 600);
+        //setAlwaysOnTop(true);
+        setSize(800, 800);
         setTitle("Triangles!");
         setLocationRelativeTo(null);
-        setLayout(new GridLayout());
+        setLayout(new BorderLayout());
         setResizable(false);
 
-        FractalRenderer triangle= new FractalRenderer(600,600, 1, 8);
-        add(triangle);
+        FractalRenderer triangle= new FractalRenderer(getWidth(),getHeight(), 2, 8);
+        add(triangle,BorderLayout.CENTER);
+
+        JPanel sidePanel = new JPanel();
+        sidePanel.setSize(300,getHeight());
+        add(sidePanel,BorderLayout.EAST);
+
+        sidePanel.setLayout(new GridLayout(8,1));
+
         setVisible(true);
 
-        Timer timer = new Timer(33, e->triangle.repaint());
-        timer.setRepeats(true);
-        timer.start();
+//        Timer timer = new Timer(0, e->triangle.repaint());
+//        timer.setRepeats(true);
+//        timer.start();
     }
 }
