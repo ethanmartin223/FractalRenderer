@@ -56,8 +56,7 @@ public class ComplexNumber {
         return new double[]{n, z.getNorm()};
     }
 
-    public static boolean probableThatPointIsInMandelbrotSequence(int x, int y) {
-        System.out.println(mandelbrotSequence(new ComplexNumber(x,y), 4, 2)[1]);
-        return 2<=mandelbrotSequence(new ComplexNumber(x,y), 2, 2)[1];
+    public static boolean probableThatPointIsInMandelbrotSequence(ComplexNumber c) {
+        return 2>=mandelbrotSequence(c, 3, 2)[0];
     }
 }
