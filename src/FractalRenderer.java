@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class FractalRenderer extends JPanel {
     float framesPerSecond;
 
-    double[][][] pixels;
+    Color[][] pixels;
     double scale;
     int pixelScale;
     long renderScale;
@@ -23,7 +23,7 @@ public class FractalRenderer extends JPanel {
         timeStamp = System.currentTimeMillis();
         pixelScale = resolution;
         scale = 80;
-        pixels = new double[h/resolution][w/resolution][2];
+        pixels = new Color[h/resolution][w/resolution];
         renderScale = (int) scale;
         deltaTime = System.currentTimeMillis();
         xPosition = 0;
@@ -113,11 +113,10 @@ public class FractalRenderer extends JPanel {
 //        System.out.println("[Debug] - Rendered Frame");
         for (int y = 0; y < pixels.length; y++) {
             for (int x = 0; x < pixels[0].length; x++) {
-                if ((int) (pixels[y][x][1]) != (int) renderScale) {
-                    int c = (int) ((int) pixels[y][x][0] + 1 - Math.log(Math.log(Math.abs(pixels[y][x][1])) / Math.log(2))) % 255;
-                    g.setColor(new Color(c, c, c));
+                //if ((int) (pixels[y][x][1]) != (int) renderScale) {;
+                    g.setColor(pixels[y][x]);
                     g.fillRect((x * pixelScale), (y * pixelScale), pixelScale, pixelScale);
-                }
+                //}
             }
         }
         framesPerSecond +=1;

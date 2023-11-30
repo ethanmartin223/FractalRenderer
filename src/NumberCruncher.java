@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -19,7 +20,8 @@ public class NumberCruncher extends Thread{
             currentData = renderQueue.poll();
             if (currentData!=null) {
                 double[] condition = ComplexNumber.mandelbrotSequence(currentData, parent.renderScale, 2);
-                parent.pixels[currentData.y][currentData.x] = condition;
+                int c = (int) ((int) condition[0] + 1 - Math.log(Math.log(Math.abs(condition[1])) / Math.log(2))) % 255;
+                parent.pixels[currentData.y][currentData.x] = new Color(c,c,c);
             }
         }
     }
