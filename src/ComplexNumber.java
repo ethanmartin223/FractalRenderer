@@ -1,8 +1,9 @@
 public class ComplexNumber {
 
     double realValue, imagValue;
+    int x, y;
 
-    public ComplexNumber(double real, double imaginary) {
+    public ComplexNumber(double real, double imaginary,int x, int y) {
         realValue = real;
         imagValue = imaginary;
     }
@@ -17,13 +18,13 @@ public class ComplexNumber {
     }
 
     public ComplexNumber add(ComplexNumber c) {
-        return new ComplexNumber(c.realValue + realValue, c.imagValue+imagValue);
+        return new ComplexNumber(c.realValue + realValue, c.imagValue+imagValue, x,y);
     }
 
     public ComplexNumber multiply(ComplexNumber c) {
         double tempImagValue = (imagValue*c.realValue)+(c.imagValue*realValue);
         double tempRealValue = (c.realValue*realValue)+((c.imagValue*imagValue)*-1);
-        return new ComplexNumber(tempRealValue, tempImagValue);
+        return new ComplexNumber(tempRealValue, tempImagValue,x,y);
     }
 
 
@@ -47,7 +48,7 @@ public class ComplexNumber {
 //    }
 
     public static double[] mandelbrotSequence(ComplexNumber c, long nOfIterations, double threshold) {
-        ComplexNumber z = new ComplexNumber(0,0);
+        ComplexNumber z = new ComplexNumber(0,0,c.x,c.y);
         int n=0;
         while  (z.getNorm() <= threshold && n< nOfIterations) {
             z = (z.multiply(z).add(c));
