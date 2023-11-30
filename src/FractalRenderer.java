@@ -61,7 +61,7 @@ public class FractalRenderer extends JPanel {
                 yDrag = (int) (yPosition+e.getY());
                 xPosition = lastReleasedPositionX-(xDrag-xPress)/scale;
                 yPosition = lastReleasedPositionY-(yDrag-yPress)/scale;
-                //e.getComponent().repaint();
+                e.getComponent().repaint();
             }
 
             @Override
@@ -81,7 +81,7 @@ public class FractalRenderer extends JPanel {
                     scale-= (1+scale*.1);
                     renderScale = (int) (255+scale*.005);
                 }
-                //e.getComponent().repaint();
+                e.getComponent().repaint();
 
             }
         });
@@ -90,11 +90,6 @@ public class FractalRenderer extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        if ((timeStamp+1000)<System.currentTimeMillis()) {
-            System.out.println("FPS: "+framesPerSecond+" Scale: "+scale+" RenderingScaling: "+renderScale);
-            timeStamp = System.currentTimeMillis();
-            framesPerSecond = 0;
-        }
         super.paintComponent(g);
 
         double xOffset = xPosition; //higher goes right
@@ -119,6 +114,5 @@ public class FractalRenderer extends JPanel {
                 //}
             }
         }
-        framesPerSecond +=1;
     }
 }

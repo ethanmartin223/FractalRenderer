@@ -21,8 +21,5 @@ public class MainWindow extends JFrame {
         add(triangle,BorderLayout.CENTER);
         setVisible(true);
 
-        Timer timer = new Timer(0,e->triangle.repaint());
-        timer.setRepeats(true);
-        timer.start();
     }
 }
