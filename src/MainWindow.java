@@ -17,9 +17,19 @@ public class MainWindow extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
 
-        FractalRenderer triangle= new FractalRenderer(getWidth(),getHeight(), 1, 4);
+        FractalRenderer triangle= new FractalRenderer(getWidth(),getHeight(), 1, 8);
         add(triangle,BorderLayout.CENTER);
+
+        JPanel sidePanel = new JPanel();
+        sidePanel.setSize(300,getHeight());
+        add(sidePanel,BorderLayout.EAST);
+
+        sidePanel.setLayout(new GridLayout(8,1));
+
         setVisible(true);
 
+        Timer timer = new Timer(0, e->triangle.repaint());
+        timer.setRepeats(true);
+        timer.start();
     }
 }
