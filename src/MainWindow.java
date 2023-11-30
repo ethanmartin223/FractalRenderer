@@ -28,8 +28,8 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
 
-//        Timer timer = new Timer(0, e->triangle.repaint());
-//        timer.setRepeats(true);
-//        timer.start();
+        Timer timer = new Timer(0, e->triangle.repaint());
+        timer.setRepeats(true);
+        timer.start();
     }
 }
