@@ -17,7 +17,7 @@ public class MainWindow extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
 
-        FractalRenderer triangle= new FractalRenderer(getWidth(),getHeight(), 2, 4);
+        FractalRenderer triangle= new FractalRenderer(getWidth(),getHeight(), 1, 4);
         add(triangle,BorderLayout.CENTER);
         setVisible(true);
 
