@@ -27,9 +27,5 @@ public class MainWindow extends JFrame {
         sidePanel.setLayout(new GridLayout(8,1));
 
         setVisible(true);
-
-        Timer timer = new Timer(0, e->triangle.repaint());
-        timer.setRepeats(true);
-        timer.start();
     }
 }
