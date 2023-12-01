@@ -20,6 +20,10 @@ public class NumberCruncher extends Thread{
             currentData = renderQueue.poll();
             if (currentData!=null) {
                 double[] condition = ComplexNumber.mandelbrotSequence(currentData, parent.renderScale, 2);
+                if (condition[0]==parent.renderScale) {
+                    parent.pixels[currentData.y][currentData.x] = Color.BLACK;
+                    continue;
+                }
                 float c = (float) (condition[0] + 1 - Math.log(Math.log(Math.abs(condition[1])))/Math.log(2))/parent.renderScale;
 //                double r = ((1-Math.cos((1*(1/Math.log(2))) *c))/2);
 //                double g = ((1-Math.cos((1/(3*Math.sqrt(2))*(1/Math.log(2))) *c))/2);
